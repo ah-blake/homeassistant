@@ -1,11 +1,11 @@
 blueprint:
-  name: ZHA - Tuya 4-Button Scene Switch MOES
-  description: Automate your Tuya 4-Button Scene Switch using ZHA events.
+  name: ZHA - Tuya 6-Button Scene Switch
+  description: Automate your Tuya 6-Button Scene Switch using ZHA events.
   domain: automation
   input:
     tuya_4button_scene_switch:
-      name: Tuya 4-Button Scene Switch
-      description: Tuya 4-Button Scene Switch to use
+      name: Tuya 6-Button Scene Switch
+      description: Tuya 6-Button Scene Switch to use
       selector:
         device:
           integration: zha
@@ -50,84 +50,84 @@ blueprint:
         action: {}
     button_three_short_press:
       name: Single Press
-      description: Action to run on button 3 (Lower-left) single press
+      description: Action to run on button 3 (Mid-left) single press
       default: []
       selector:
         action: {}
     button_three_double_press:
       name: Double Press
-      description: Action to run on button 3 (Lower-left) double press
+      description: Action to run on button 3 (Mid-left) double press
       default: []
       selector:
         action: {}
     button_three_long_press:
       name: Long Press
-      description: Action to run on button 3 (Lower-left) long press
+      description: Action to run on button 3 (Mid-left) long press
       default: []
       selector:
         action: {}
     button_four_short_press:
       name: Single Press
-      description: Action to run on button 4 (Lower-right) single press
+      description: Action to run on button 4 (Mid-right) single press
       default: []
       selector:
         action: {}
     button_four_double_press:
       name: Double Press
-      description: Action to run on button 4 (Lower-right) double press
+      description: Action to run on button 4 (Mid-right) double press
       default: []
       selector:
         action: {}
     button_four_long_press:
       name: Long Press
-      description: Action to run on button 4 (Lower-right) long press
+      description: Action to run on button 4 (Mid-right) long press
       default: []
       selector:
         action: {}
     button_three_short_press:
       name: Single Press
-      description: Action to run on button 3 (Lower-left) single press
+      description: Action to run on button 5 (Lower-left) single press
       default: []
       selector:
         action: {}
     button_three_double_press:
       name: Double Press
-      description: Action to run on button 3 (Lower-left) double press
+      description: Action to run on button 5 (Lower-left) double press
       default: []
       selector:
         action: {}
     button_three_long_press:
       name: Long Press
-      description: Action to run on button 3 (Lower-left) long press
+      description: Action to run on button 5 (Lower-left) long press
       default: []
       selector:
         action: {}
     button_four_short_press:
       name: Single Press
-      description: Action to run on button 4 (Lower-right) single press
+      description: Action to run on button 6 (Lower-right) single press
       default: []
       selector:
         action: {}
     button_four_double_press:
       name: Double Press
-      description: Action to run on button 4 (Lower-right) double press
+      description: Action to run on button 6 (Lower-right) double press
       default: []
       selector:
         action: {}
     button_four_long_press:
       name: Long Press
-      description: Action to run on button 4 (Lower-right) long press
+      description: Action to run on button 6 (Lower-right) long press
       default: []
       selector:
         action: {}
-  source_url: https://github.com/multivrac/HA_Blueprint-MOES-Scene-Button/blob/main/zha-tuya-4-button-scene-switch-ts0044-moes.yaml
+  source_url: https://github.com/ah-blake/homeassistant/blob/main/zha-tuya-6-button-scene-switch-ts0044-moes.yaml
 mode: restart
 max_exceeded: silent
 trigger:
 - platform: event
   event_type: zha_event
   event_data:
-    device_id: !input 'tuya_4button_scene_switch'
+    device_id: !input 'tuya_6button_scene_switch'
 action:
 - variables:
     command: '{{ trigger.event.data.command }}'
@@ -144,6 +144,10 @@ action:
         sequence: !input 'button_three_short_press'
       - conditions: '{{ endpoint_id == 4 }}'
         sequence: !input 'button_four_short_press'
+      - conditions: '{{ endpoint_id == 4 }}'
+        sequence: !input 'button_five_short_press'
+      - conditions: '{{ endpoint_id == 6 }}'
+        sequence: !input 'button_six_short_press'        
   - conditions: '{{ command == ''remote_button_double_press'' }}'
     sequence:
     - choose:
@@ -155,6 +159,10 @@ action:
         sequence: !input 'button_three_double_press'
       - conditions: '{{ endpoint_id == 4 }}'
         sequence: !input 'button_four_double_press'
+      - conditions: '{{ endpoint_id == 5 }}'
+        sequence: !input 'button_five_double_press'
+      - conditions: '{{ endpoint_id == 6 }}'
+        sequence: !input 'button_six_double_press'        
   - conditions: '{{ command == ''remote_button_long_press'' }}'
     sequence:
     - choose:
@@ -166,3 +174,7 @@ action:
         sequence: !input 'button_three_long_press'
       - conditions: '{{ endpoint_id == 4 }}'
         sequence: !input 'button_four_long_press'
+      - conditions: '{{ endpoint_id == 5 }}'
+        sequence: !input 'button_five_long_press'
+      - conditions: '{{ endpoint_id == 6 }}'
+        sequence: !input 'button_six_long_press'
